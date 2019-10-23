@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#Description: System inventory on demand
+
+#Author: Erik B
+#Date 10/2019
+#modified on:        by:
+
+## Checking if user is root
+
+if [ $UID -ne 0 ]
+then
+         echo -e "\n you need root access ...\n"
+         exit 1
+fi
+
+echo -e "\nplease make a choice below: \n
+        **********************************
+        *        1==> cpu                *
+        *        2==> memory             *
+        *        3==> os version         *
+        *        4==> processes          *
+        *        5==> system bits        *
+        *        6==> mount points       *
+        *        7==> ip address         *
+        *        8==> hostname           *
+        *        9==> kernel version     *
+        *        10==> update os         *
+        **********************************"
+echo -n " Enter your choice ( 1 - 10):  "
+read ans
+
+if [ ${ans} -eq 1 ] 2>/dev/null
+then
+lscpu
+elif [ ${ans} -eq 2 ] 2>/dev/null
+then
+free -m
+elif [ ${ans} -eq 3 ] 2>/dev/null
+then
+cat /etc/*release
+elif [ ${ans} -eq 4 ] 2>/dev/null
+then
+ps -ef |wc -l
+elif [ ${ans} -eq 5 ] 2>/dev/null
+then
+getconf LONG_BIT
+elif [ ${ans} -eq 6 ] 2>/dev/null
+then
+df -h
+elif [ ${ans} -eq 7 ] 2>/dev/null
+then
+ip a
+elif [ ${ans} -eq 8 ] 2>/dev/null
+then
+hostname
+elif [ ${ans} -eq 9 ] 2>/dev/null
+then
+uname -r
+elif [ ${ans} -eq 10 ] 2>/dev/null
+then
+yum update -y
+
+else
+echo -e "\nplease enter a valid choice (1 - 10) "
+exit 2
+fi
